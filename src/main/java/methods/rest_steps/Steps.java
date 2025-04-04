@@ -31,15 +31,9 @@ public class Steps extends ValidationSteps {
     private String apiSecret;
     private OAuthConsumer consumer;
 
-    // Constructor with auth
-    public Steps(String baseUrl, String apiKey, String apiSecret){
+    // Constructor without auth
+    public Steps(String baseUrl){
         this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
-        this.apiSecret = apiSecret;
-
-        if (apiKey != null && apiSecret != null) {
-            this.consumer = new CommonsHttpOAuthConsumer(apiKey, apiSecret);
-        }
         RestAssured.baseURI = baseUrl;
     }
 
@@ -60,10 +54,7 @@ public class Steps extends ValidationSteps {
         System.out.println("Base URL: " + baseUrl);
     }
 
-    // Constructor without auth
-    public Steps(String baseUrl){
-        this(baseUrl, null, null);
-    }
+
 
     /**
      * Получение заголовка OAuth для конкретного эндпоинта и метода
