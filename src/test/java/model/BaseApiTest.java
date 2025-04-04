@@ -1,8 +1,6 @@
 package model;
 
 import io.restassured.response.Response;
-import methods.config.OAuthConfig;
-import methods.config.OAuthConfigLoader;
 import methods.rest_steps.Steps;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
@@ -14,9 +12,6 @@ public abstract class BaseApiTest {
     @BeforeEach
     void setUp(TestInfo testInfo){
         testName = testInfo.getDisplayName();
-
-//        OAuthConfig config = OAuthConfigLoader.loadConfig();
-//        steps = new Steps(config.getBaseUrl(), config.getApiKey(), config.getApiSecret());
         steps = new Steps();
     }
 

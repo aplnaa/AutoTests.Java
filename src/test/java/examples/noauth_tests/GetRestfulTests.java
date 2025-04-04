@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+    Автотесты без авторизации для метода: GET
+*/
 @DisplayName("GET tests")
 public class GetRestfulTests {
     private final String BASE_URL = "https://api.restful-api.dev";
