@@ -2,11 +2,10 @@ package methods.rest_steps;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -50,16 +49,12 @@ public class Steps extends ValidationSteps {
 
         RestAssured.baseURI = baseUrl;
 
-        System.out.println("Initialized with API Key: " + apiKey);
-        System.out.println("Base URL: " + baseUrl);
     }
-
-
 
     /**
      * Получение заголовка OAuth для конкретного эндпоинта и метода
      * @param endpoint эндпоинт (путь запроса)
-     * @param method HTTP метод (GET, POST, etc.)
+     * @param method HTTP метод (GET, POST, и тд)
      * @return заголовок Authorization или null в случае ошибки
      */
     private String getOAuthHeader(String endpoint, String method) {
@@ -108,7 +103,7 @@ public class Steps extends ValidationSteps {
     // GET request method
     @Step("Send GET request {endpoint}")
     public Response sendGetRequest(String endpoint){
-        RequestSpecification spec = RestAssured.given();
+        RequestSpecification spec = RestAssured.given().filter(new AllureRestAssured());
 
         // Получаем OAuth заголовок для конкретного эндпоинта
         String authHeader = getOAuthHeader(endpoint, "GET");
@@ -125,7 +120,7 @@ public class Steps extends ValidationSteps {
     // POST request method
     @Step("Send POST request {endpoint}")
     public Response sendPostRequest(String endpoint, Object request){
-        RequestSpecification spec = RestAssured.given();
+        RequestSpecification spec = RestAssured.given().filter(new AllureRestAssured());
 
         // Получаем OAuth заголовок для конкретного эндпоинта
         String authHeader = getOAuthHeader(endpoint, "POST");
@@ -145,7 +140,7 @@ public class Steps extends ValidationSteps {
     // PUT request method
     @Step
     public Response sendPutRequest(String endpoint, Object request){
-        RequestSpecification spec = RestAssured.given();
+        RequestSpecification spec = RestAssured.given().filter(new AllureRestAssured());
 
         // Получаем OAuth заголовок для конкретного эндпоинта
         String authHeader = getOAuthHeader(endpoint, "PUT");
@@ -164,7 +159,7 @@ public class Steps extends ValidationSteps {
     // PATCH request method
     @Step
     public Response sendPatchRequest(String endpoint, Object request){
-        RequestSpecification spec = RestAssured.given();
+        RequestSpecification spec = RestAssured.given().filter(new AllureRestAssured());
 
         // PATCH не поддерживается напрямую в Apache HTTP Client, используем POST с заголовком
         String authHeader = getOAuthHeader(endpoint, "POST");
@@ -183,7 +178,7 @@ public class Steps extends ValidationSteps {
     // DELETE request method
     @Step
     public Response sendDeleteRequest(String endpoint){
-        RequestSpecification spec = RestAssured.given();
+        RequestSpecification spec = RestAssured.given().filter(new AllureRestAssured());
 
         // Получаем OAuth заголовок для конкретного эндпоинта
         String authHeader = getOAuthHeader(endpoint, "DELETE");
@@ -198,7 +193,7 @@ public class Steps extends ValidationSteps {
 
     @Step
     public Response sendGetRequestParam(String endpoint, Map<String, List<Object>> params){
-        RequestSpecification spec = RestAssured.given();
+        RequestSpecification spec = RestAssured.given().filter(new AllureRestAssured());
 
         // Собираем строку с параметрами для OAuth подписи
         StringBuilder endpointWithParams = new StringBuilder(endpoint);
@@ -250,9 +245,6 @@ public class Steps extends ValidationSteps {
                 JsonReader jsonReader = new JsonReader(new StringReader(jsonResponse));
                 jsonReader.setLenient(true);
 
-                JsonElement jsonElement = JsonParser.parseReader(jsonReader);
-                String prettyJson = gson.toJson(jsonElement);
-                System.out.println("Результат запроса: \n" + prettyJson);
             } else {
                 System.out.println("Результат запроса: пустой ответ");
             }

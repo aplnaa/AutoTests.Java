@@ -1,5 +1,8 @@
 package examples.noauth_tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import jdk.jfr.Description;
 import methods.rest_steps.Steps;

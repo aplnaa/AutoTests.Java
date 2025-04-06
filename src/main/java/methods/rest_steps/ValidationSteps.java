@@ -29,6 +29,5 @@ public class ValidationSteps {
         List<?> list = json.getList(jsonPath);
         Assertions.assertNotNull(list, "Json-путь: " + jsonPath + " не найден");
         Assertions.assertTrue(list.contains(expectedValue), "Массив по Json-пути: " + jsonPath + " не содержит значения: " + expectedValue);
-
     }
 }
