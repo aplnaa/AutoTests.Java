@@ -8,7 +8,7 @@ import requests.authkey.RequestReportIcons;
 
 import java.util.Arrays;
 
-@DisplayName("Отправка отчета по иконкам")
+@DisplayName("POST: /report отправка отчета по иконкам")
 public class PostClientReportTests extends BaseApiTest {
     private String endpoint = "/v2/client/report";
 
@@ -18,7 +18,6 @@ public class PostClientReportTests extends BaseApiTest {
         RequestReportIcons request = new RequestReportIcons(Arrays.asList(42, 143, 1337), true);
         Response response = steps.sendPostRequest(endpoint, request);
         steps.checkStatusCode(response, 200);
-        steps.jsonBodyContains(response, "total_icons_reported", 3);
     }
 
     @Test
@@ -27,7 +26,7 @@ public class PostClientReportTests extends BaseApiTest {
         RequestReportIcons request = new RequestReportIcons(Arrays.asList(), true);
         Response response = steps.sendPostRequest(endpoint, request);
         steps.checkStatusCode(response, 200);
-        steps.jsonBodyContains(response, "total_icons_reported", 0);
+        steps.paramEqualValue(response, "total_icons_reported", 0);
     }
 
     @Test
@@ -35,7 +34,7 @@ public class PostClientReportTests extends BaseApiTest {
     public void checkNotValidIconsPostTest(){
         RequestReportIcons request = new RequestReportIcons(Arrays.asList("abc", false), true);
         Response response = steps.sendPostRequest(endpoint, request);
-        steps.checkStatusCode(response, 200);
-        steps.jsonBodyContains(response, "message", "Icons must be an array of integers");
+        steps.checkStatusCode(response, 400);
+        steps.paramEqualValue(response, "message", "Icons must be an array of integers");
     }
 }

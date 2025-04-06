@@ -70,7 +70,41 @@ public class ValidationSteps {
                 "В массиве по JSON-пути '" + jsonPath + "' найдены дубликаты: " + duplicates);
     }
 
-    @Step("Проверка: строковое поле {jsonPath} содержит подстроку {substring}")
+    @Step("Проверка: парамтр равен заданному значению")
+    public void paramEqualValue(Response response, String jsonPath, Object expectedValue) {
+        JsonPath json = response.jsonPath();
+        Object actualValue = json.get(jsonPath);
+
+        Assertions.assertNotNull(actualValue, "JSON-путь '" + jsonPath + "' не найден в ответе");
+
+        if (expectedValue instanceof Number && actualValue instanceof Number) {
+            double expectedDouble = ((Number) expectedValue).doubleValue();
+            double actualDouble = ((Number) actualValue).doubleValue();
+
+            Assertions.assertEquals(expectedDouble, actualDouble,
+                    "Числовое значение поля '" + jsonPath + "' не соответствует ожидаемому");
+        }
+        else if (expectedValue instanceof Boolean && actualValue instanceof Boolean) {
+            boolean expectedBool = (Boolean) expectedValue;
+            boolean actualBool = (Boolean) actualValue;
+
+            Assertions.assertEquals(expectedBool, actualBool,
+                    "Логическое значение поля '" + jsonPath + "' не соответствует ожидаемому");
+        }
+        else if (expectedValue instanceof String && actualValue instanceof String) {
+            String expectedString = (String) expectedValue;
+            String actualString = (String) actualValue;
+
+            Assertions.assertEquals(expectedString, actualString,
+                    "Строковое значение поля '" + jsonPath + "' не соответствует ожидаемому");
+        }
+        else {
+            Assertions.assertEquals(expectedValue, actualValue,
+                    "Значение поля '" + jsonPath + "' не соответствует ожидаемому");
+        }
+    }
+
+    @Step("Проверка: параметр содержит подстроку {substring}")
     public void verifyJsonPathContainsSubstring(Response response, String jsonPath, String substring) {
         JsonPath json = response.jsonPath();
         String value = json.getString(jsonPath);

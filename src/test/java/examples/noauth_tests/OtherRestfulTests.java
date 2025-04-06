@@ -13,7 +13,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 /*
     Автотесты без авторизации по методам: POST, PUT, PATCH, DELETE
 */
-@DisplayName("POST, PUT, PATCH and DELETE tests")
+@DisplayName("POST, PATCH, DELETE, UPDATE: Restful-api")
 @TestMethodOrder(OrderAnnotation.class)
 public class OtherRestfulTests {
     private static String BASE_URL = "https://api.restful-api.dev";

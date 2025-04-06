@@ -18,7 +18,7 @@ import java.util.Map;
 /*
     Автотесты без авторизации для метода: GET
 */
-@DisplayName("GET tests")
+@DisplayName("GET: Restful-api")
 public class GetRestfulTests {
     private final String BASE_URL = "https://api.restful-api.dev";
     private String endpoint;

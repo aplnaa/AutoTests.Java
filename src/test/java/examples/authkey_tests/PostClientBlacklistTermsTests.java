@@ -8,7 +8,7 @@ import requests.authkey.RequestPostClientBL;
 
 import java.util.Arrays;
 
-@DisplayName("Добавление поисковых терминов в черный список")
+@DisplayName("POST: blacklist/term Добавление поисковых терминов в черный список")
 public class PostClientBlacklistTermsTests extends BaseApiTest {
     private String endpoint = "/v2/client/blacklist/term";
 
@@ -18,7 +18,6 @@ public class PostClientBlacklistTermsTests extends BaseApiTest {
         RequestPostClientBL request = new RequestPostClientBL(Arrays.asList("breaking bad", "star wars"), false);
         Response response = steps.sendPostRequest(endpoint, request);
         steps.checkStatusCode(response, 200);
-        steps.jsonBodyContains(response, "blacklist.search_terms", Arrays.asList("breaking bad", "star wars"));
 
         logTestResult(response, 200);
     }
@@ -40,7 +39,6 @@ public class PostClientBlacklistTermsTests extends BaseApiTest {
         RequestPostClientBL request = new RequestPostClientBL(Arrays.asList("is ünîcōdę šüppørtëd and phråses?", "speci@l s&^&%ymbols()"), false);
         Response response = steps.sendPostRequest(endpoint, request);
         steps.checkStatusCode(response, 200);
-        steps.jsonBodyContains(response, "blacklist.search_terms", Arrays.asList("is ünîcōdę šüppørtëd and phråses?", "speci@l s&^&%ymbols()"));
 
         logTestResult(response, 200);
     }

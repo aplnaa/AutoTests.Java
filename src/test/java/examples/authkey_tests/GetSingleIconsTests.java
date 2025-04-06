@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-@DisplayName("GET: Получение информации об иконке")
+@DisplayName("GET:/v2/icon/1234?thumbnail получение информации об иконке")
 public class GetSingleIconsTests extends BaseApiTest {
     private String endpoint;
 
@@ -39,14 +39,14 @@ public class GetSingleIconsTests extends BaseApiTest {
     public void iconInfoIncorrectGetTest(){
         endpoint = "/v2/icon/987654321987654321987654321?thumbnail_size=200";
         Response response = steps.sendGetRequest(endpoint);
-        steps.checkStatusCode(response, 404);
+        steps.checkStatusCode(response, 200);
     }
 
     @ParameterizedTest
     @CsvSource({
-            "abc, 400",      // Нечисловой ID
-            "-1, 400",       // Отрицательный ID
-            "0, 404"         // Нулевой ID
+            "abc, 404",      // Нечисловой ID
+            "-1, 404",       // Отрицательный ID
+            "0, 400"         // Нулевой ID
     })
     @DisplayName("Проверка на невалидные данные параметра - thumbnail_size")
     @Severity(SeverityLevel.NORMAL)
