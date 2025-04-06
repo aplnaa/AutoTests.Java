@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("GET tests")
-public class GetClientBlackListTests extends BaseApiTest {
+public class GetClientBlacklistTests extends BaseApiTest {
     private String endpoint;
 
     @Test
