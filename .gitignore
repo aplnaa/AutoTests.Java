@@ -43,3 +43,4 @@ src/main/resources/oauth_config.yml
 
 ### allure-results
 allure-results
+.allure
